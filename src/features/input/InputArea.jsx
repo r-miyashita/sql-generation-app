@@ -1,6 +1,6 @@
 // import { useRecoilState } from 'recoil';
 // import { tableDataAtom } from '@/stores/table-data';
-import { formatData } from './control-charcters';
+import { formatData } from './logic';
 
 // const [tableData, setTableData] = useRecoilState(tableDataAtom);
 
