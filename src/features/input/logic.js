@@ -69,7 +69,7 @@ function parseInput(inData) {
 /* ``````````````````````````````
 normalizeLineBreak
 
-入力イベント時に発生する改行エスケープを考慮して
+入力イベント時に発生する改行エスケープを戻す
 `````````````````````````````` */
 function normalizeLineBreak(inData) {
     const [CRLF, LF] = [

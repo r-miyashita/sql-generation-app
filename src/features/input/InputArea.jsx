@@ -1,6 +1,7 @@
 // import { useRecoilState } from 'recoil';
 // import { tableDataAtom } from '@/stores/table-data';
 import { formatData } from './logic';
+import { checkArrLength } from './error';
 
 // const [tableData, setTableData] = useRecoilState(tableDataAtom);
 
@@ -9,18 +10,8 @@ const handleInput = e => {
 
     const result = formatData(e.target.value);
 
-    // 項目数 < 要素数 となる配列 =>> 値に区切り文字が含まれている可能性がある =>> アラートを出す
-    const numOfHeaders = Number(result[0]?.length);
-    const errs = [];
-    result.forEach((el, idx) => {
-        if (Number(el.length) !== numOfHeaders) {
-            errs.push({
-                row: idx + 1,
-                length: el.length,
-            });
-        }
-    });
-
+    // 項目数 < 要素数 となる配列 =>> 値に区切り文字が含まれている可能性があるので、アラートを出す
+    const errs = checkArrLength(result);
     if (errs) {
         let warns = '';
         errs.forEach(el => {
