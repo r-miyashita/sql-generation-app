@@ -58,7 +58,7 @@ function parseInput(inData) {
 
     // 改行文字判定後、1次元配列作成 (EOFに改行があった場合は除去する)
     const lineBreakPtn = lineBreakDecision(data) === '\n' ? '\n' : '\r\n';
-    const rows = data.split(lineBreakPtn).filter(el => Boolean(el));
+    const rows = data.split(lineBreakPtn).filter(el => el);
 
     // 区切り文字判定後、2次元配列を作成し返却
     const delimiter = delimiterDecision(rows[0]);
