@@ -1,5 +1,5 @@
-// ここに features の component をインポートしていく
-import InputArea from './features/input/InputArea';
+// ここに feature の component をインポートしていく
+import InputArea from './feature/input/InputArea';
 
 function App() {
     return (

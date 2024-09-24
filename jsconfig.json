@@ -4,7 +4,7 @@
         "paths": {
             "@/": ["src/"],
             "@/assets/*": ["src/assets/*"],
-            "@/features/*": ["src/features/*"],
+            "@/feature/*": ["src/feature/*"],
             "@/pages/*": ["src/pages/*"],
             "@/stores/*": ["src/stores/*"]
         }
