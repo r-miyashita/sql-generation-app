@@ -17,7 +17,7 @@ const handleInput = e => {
     result.forEach(el => console.log(el));
 };
 
-export default function input() {
+export default function InputArea() {
     return (
         <>
             <textarea type="text" onChange={handleInput} />
