@@ -16,7 +16,8 @@ export default function InputArea() {
 
         setTableData(() => indata);
 
-        indata.forEach(el => console.log(el));
+        // 確認用 あとで削除
+        console.log(indata);
     };
 
     return (
