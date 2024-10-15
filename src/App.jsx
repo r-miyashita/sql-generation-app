@@ -1,5 +1,6 @@
 // ここに feature の component をインポートしていく
 import InputArea from './feature/input/InputArea';
+import EditTableArea from './feature/edit-table/EditTableArea';
 
 function App() {
     return (
@@ -8,7 +9,7 @@ function App() {
 
             <p>input-area</p>
             <InputArea />
-            <p>editable-area</p>
+            <EditTableArea />
             <p>output-area</p>
 
             <p>footer</p>
