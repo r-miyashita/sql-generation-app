@@ -16,11 +16,11 @@ functions
 ================================================== */
 
 /* ``````````````````````````````
-lineBreakDecision
+getLineBreak
 
 文字列を受け取って改行を判定する
 `````````````````````````````` */
-function lineBreakDecision(str) {
+function getLineBreak(str) {
     const counts = {
         '\n': (str.match(/(?<!\r)\n/g) ?? []).length,
         '\r\n': (str.match(/\r\n/g) ?? []).length,
@@ -30,11 +30,11 @@ function lineBreakDecision(str) {
 }
 
 /* ``````````````````````````````
-delimiterDecision
+getDelimiter
 
 文字列を受け取って区切り文字を判定する
 `````````````````````````````` */
-function delimiterDecision(str) {
+function getDelimiter(str) {
     const counts = [];
     delimiters.forEach(delimiter => {
         counts.push((str?.match(new RegExp(delimiter, 'g')) ?? []).length);
@@ -57,11 +57,11 @@ function parseInput(inData) {
     const data = normalizeLineBreak(inData)
 
     // 改行文字判定後、1次元配列作成 (EOFに改行があった場合は除去する)
-    const lineBreakPtn = lineBreakDecision(data) === '\n' ? '\n' : '\r\n';
+    const lineBreakPtn = getLineBreak(data);
     const rows = data.split(lineBreakPtn).filter(el => el);
 
     // 区切り文字判定後、2次元配列を作成し返却
-    const delimiter = delimiterDecision(rows[0]);
+    const delimiter = getDelimiter(rows[0]);
     const pattern = new RegExp(`${delimiter}(?=(?:[^"]*"[^"]*")*[^"]*$)`, 'g');
     return rows.map(row => row.split(pattern));
 }

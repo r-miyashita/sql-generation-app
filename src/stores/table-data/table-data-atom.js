@@ -1,4 +1,4 @@
-import { atom } from "recoil"
+import { atom, selector } from "recoil"
 
 export const tableDataAtom = atom({
     key: 'tableDataAtom',
@@ -11,4 +11,18 @@ export const tableDataAtom = atom({
         ['data_1-4', 'data_2-4', 'data_3-4', 'data_4-4', 'data_5-4'],
     ]
     // default: []
-})
+});
+
+export const tableDataHeaderSelector = selector({
+    key: 'tableDataHeaderSelector',
+    get: ({ get }) => {
+        return get(tableDataAtom)[0];
+    },
+});
+
+export const tableDataBodySelector = selector({
+    key: 'tableDataBodySelector',
+    get: ({ get }) => {
+        return get(tableDataAtom).slice(1);
+    },
+});
