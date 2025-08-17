@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const useModal = (initialState = {}) => {
     // HACK 整数のキーが存在すると並び順が担保できなくなる仕様になっている。厳密に制御が必要なら追加処置が必要。
@@ -15,10 +15,9 @@ const useModal = (initialState = {}) => {
             if (prev[modalRole] && callback) callback();
             return { ...prev, [modalRole]: false };
         });
+    };
 
-    }
-
-    return { modals, modalStates, openModal, closeModal }
+    return { modals, modalStates, openModal, closeModal };
 };
 
 export default useModal;

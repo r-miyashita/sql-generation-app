@@ -44,6 +44,7 @@ const OutputArea = () => {
     const header = useRecoilValue(tableDataHeaderSelector); // カラム情報を配列で保持。各sqlの生成に使う
     const body = useRecoilValue(tableDataBodySelector);
     const [sqlType, setSqlType] = useState(TYPES.insert); //タイプは 'insert' or 'update' の2種
+    // todo: INPUT入力無の状態でOnchangeが発火するとエラーになる。 headerがundifinedのために、mapを使えないエラー。 元のrecoil更新でundifinedにならないように制御入れた方が良さそう。
     const columns = header.map(col => ({
         name: col,
         useInWhere: false,
@@ -70,7 +71,7 @@ const OutputArea = () => {
         const setting = helper.updateSqlSetting(
             type,
             columns,
-            DEFAULT_TABLE_NAME
+            DEFAULT_TABLE_NAME,
         );
         setSqlType(type);
         setSqlSetting(setting);
@@ -122,7 +123,7 @@ const OutputArea = () => {
         const query = helper.generateInsertQuery(
             currentTableName,
             header,
-            body
+            body,
         );
         setInsertQuery(query.head + query.body + query.tail);
     };
@@ -136,7 +137,7 @@ const OutputArea = () => {
         const querys = helper.generateUpdateQuery(
             currentTableName,
             columnsState,
-            body
+            body,
         );
         setUpdateQuery(querys);
     };

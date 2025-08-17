@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil"
+import { atom, selector } from 'recoil';
 
 export const tableDataAtom = atom({
     key: 'tableDataAtom',
@@ -9,7 +9,7 @@ export const tableDataAtom = atom({
         ['data_1-2', 'data_2-2', 'data_3-2', 'data_4-2', 'data_5-2'],
         ['data_1-3', 'data_2-3', 'data_3-3', 'data_4-3', 'data_5-3'],
         ['data_1-4', 'data_2-4', 'data_3-4', 'data_4-4', 'data_5-4'],
-    ]
+    ],
     // default: []
 });
 

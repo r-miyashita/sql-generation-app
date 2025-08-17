@@ -1,14 +1,12 @@
-// ここに feature の component をインポートしていく
-import InputArea from './feature/input/InputArea';
-import EditTableArea from './feature/edit-table/EditTableArea';
-import OutputArea from './feature/output/OutputArea';
+import { Header } from '@/feature/ui/header';
+import { InputArea } from '@/feature/input';
+import EditTableArea from '@/feature/edit-table/EditTableArea';
+import OutputArea from '@/feature/output/OutputArea';
 
 function App() {
     return (
         <>
-            <p>header</p>
-
-            <p>input-area</p>
+            <Header />
             <InputArea />
             <EditTableArea />
             <OutputArea />
