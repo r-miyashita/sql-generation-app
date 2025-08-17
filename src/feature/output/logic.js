@@ -115,7 +115,7 @@ const generateCreateQuery = (currentTableName, header) => ({
             idx === arr.length - 1
                 ? acc + `\t${cur}\tVARCHAR(512)\n`
                 : acc + `\t${cur}\tVARCHAR(512),\n`,
-        ''
+        '',
     ),
     tail: ');',
 });
@@ -129,27 +129,33 @@ const generateInsertQuery = (currentTableName, header, body) => {
     const columns = header.reduce(
         (acc, cur, idx, arr) =>
             idx === arr.length - 1 ? acc + `\`${cur}\`` : acc + `\`${cur}\`, `,
-        ''
+        '',
     );
 
     // reduce でマルチインサートの `value行` を作っていく
     const values = fillEmptyStrings(body).reduce(
         (acc, cur, idx, arr) =>
             idx === arr.length - 1
-                ? acc + cur.reduce( // 最終行： 改行インデントを付加しない
-                    (acc, cur, idx, arr) =>
-                        idx === arr.length - 1
-                            ? acc + `${formatValue(cur)})`
-                            : acc + `${formatValue(cur)}, `,
-                    '('
-                )
-                : acc + cur.reduce( // 最終行でない: 改行インデントを付加する
-                    (acc, cur, idx, arr) => {
-                        return idx === arr.length - 1
-                            ? acc + `${formatValue(cur)}),\n\t`
-                            : acc + `${formatValue(cur)}, `;
-                    }, '('),
-        ''
+                ? acc +
+                  cur.reduce(
+                      // 最終行： 改行インデントを付加しない
+                      (acc, cur, idx, arr) =>
+                          idx === arr.length - 1
+                              ? acc + `${formatValue(cur)})`
+                              : acc + `${formatValue(cur)}, `,
+                      '(',
+                  )
+                : acc +
+                  cur.reduce(
+                      // 最終行でない: 改行インデントを付加する
+                      (acc, cur, idx, arr) => {
+                          return idx === arr.length - 1
+                              ? acc + `${formatValue(cur)}),\n\t`
+                              : acc + `${formatValue(cur)}, `;
+                      },
+                      '(',
+                  ),
+        '',
     );
 
     return {
@@ -166,7 +172,9 @@ const generateInsertQuery = (currentTableName, header, body) => {
 `````````````````````````````` */
 // 第2引数が`true`の要素を抽出対象とする。 `カラム名` と 対応する値の`インデックス` のセットを格納した2次元配列を返却する
 const filterColumns = (columns, property) =>
-    columns.map(((col, idx) => col[property] ? [col.name, idx] : [])).filter(el => el.length > 0);
+    columns
+        .map((col, idx) => (col[property] ? [col.name, idx] : []))
+        .filter(el => el.length > 0);
 
 // WHERE句のカラムと値を繋ぐオペレータを判定し返却する
 const getOperator = val => {
@@ -177,32 +185,37 @@ const getOperator = val => {
 // `対象カラム`と`対応する値`を取り出し、1行ずつクエリを作成していく
 const generateUpdateQuery = (currentTableName, columnsState, body) => {
     const headStatement = `UPDATE \`${currentTableName}\``;
-    const tailStatement = ';'
+    const tailStatement = ';';
 
-    // 対象カラムの抽出。第2引数の 
+    // 対象カラムの抽出。第2引数の
     const setColumns = filterColumns(columnsState, 'useInSet');
     const whereColumns = filterColumns(columnsState, 'useInWhere');
 
     // クエリ作成部分 1行１クエリを生成し、配列へ格納する
     const querys = fillEmptyStrings(body).map(row => {
-
         const setStatement = setColumns.reduce((prev, cur) => {
-            const [col, val] = [`\`${cur[0]}\``, formatValue(row[cur[1]])]
-            return prev.length === 0 ? ' ' + `SET ${col} = ${val}` : prev + `, ${col} = ${val}`;
+            const [col, val] = [`\`${cur[0]}\``, formatValue(row[cur[1]])];
+            return prev.length === 0
+                ? ' ' + `SET ${col} = ${val}`
+                : prev + `, ${col} = ${val}`;
         }, '');
 
         const whereStatement = whereColumns.reduce((prev, cur) => {
-            const [col, val] = [`\`${cur[0]}\``, formatValue(row[cur[1]])]
+            const [col, val] = [`\`${cur[0]}\``, formatValue(row[cur[1]])];
             const operator = getOperator(val);
-            return prev.length === 0 ? ' ' + `WHERE ${col} ${operator} ${val}` : prev + ` AND ${col} ${operator} ${val}`;
+            return prev.length === 0
+                ? ' ' + `WHERE ${col} ${operator} ${val}`
+                : prev + ` AND ${col} ${operator} ${val}`;
         }, '');
 
         return headStatement + setStatement + whereStatement + tailStatement;
     });
 
-    return querys.reduce((prev, cur) => prev === '' ? prev + cur : prev + '\n' + cur, '')
+    return querys.reduce(
+        (prev, cur) => (prev === '' ? prev + cur : prev + '\n' + cur),
+        '',
+    );
 };
-
 
 /* ==================================================
 エクスポート

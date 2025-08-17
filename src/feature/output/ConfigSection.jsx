@@ -101,7 +101,7 @@ ConfigSection.propTypes = {
                 name: PropTypes.string,
                 useInWhere: PropTypes.bool,
                 useInSet: PropTypes.bool,
-            })
+            }),
         ),
     }).isRequired,
     handleInputChange: PropTypes.func.isRequired,

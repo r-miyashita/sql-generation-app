@@ -1,25 +1,19 @@
 import PropTypes from 'prop-types';
+import Button from '@/feature/ui/button/Button';
 
 const SqlModeToggleButton = ({ type, sqlType, onClick }) => {
-    const getButtonText = () => {
-        switch (type) {
-            case 'update':
-                return 'UPDATE';
-            case 'insert':
-                return 'INSERT';
-            default:
-                return 'UNKNOWN';
-        }
+    const text = type.toUpperCase();
+    const isActive = sqlType === type ? true : false;
+
+    // アクティブ状態のスタイリング
+    const style = {
+        backgroundColor: isActive ? 'red' : 'transparent',
     };
 
-    const getButtonStyle = () => ({
-        backgroundColor: sqlType === type ? 'red' : 'transparent',
-    });
-
     return (
-        <button onClick={() => onClick(type)} style={getButtonStyle()}>
-            {getButtonText()}
-        </button>
+        <Button onClick={() => onClick(type)} style={style}>
+            {text}
+        </Button>
     );
 };
 

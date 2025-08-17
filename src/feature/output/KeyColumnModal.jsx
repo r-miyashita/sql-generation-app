@@ -30,7 +30,7 @@ const KeyColumnModal = ({
         const updateColumns = columnsState.map((prevCol, idx) =>
             eventIdx === idx
                 ? { ...prevCol, [role]: e.target.checked }
-                : prevCol
+                : prevCol,
         );
         setColumnsState(updateColumns);
     };
@@ -71,7 +71,7 @@ KeyColumnModal.propTypes = {
             name: PropTypes.string,
             useInWhere: PropTypes.bool,
             useInSet: PropTypes.bool,
-        })
+        }),
     ).isRequired,
     role: PropTypes.oneOf(['useInWhere', 'useInSet']),
 };
